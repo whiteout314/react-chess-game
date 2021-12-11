@@ -1,0 +1,33 @@
+#Tile
+{
+    display: grid;
+    width: 100px;
+    height: 100px;
+    
+    place-content: center;
+}
+.White
+{
+    background: white;
+}
+.Black
+{
+    background: #e67e22;
+}
+.piece
+{
+    display: grid;
+    
+    width: 100px;
+    height: 100px;
+    background-size: 80px;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+.piece:hover
+{
+    cursor: grab;
+}
+.piece:active{
+    cursor: grabbing;
+}
