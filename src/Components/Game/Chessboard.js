@@ -6,14 +6,14 @@ export default function Chessboard ()
 {
 
     const chessboardRef = useRef(null);
-    let active = null; let chessboard = null;
+    let active = null; let chessboard = null; let element = null;
     const [piece, setPiece] = useState(pieces);
     const [grabX, setGrabX] = useState(0);
     const [grabY, setGrabY] = useState(0);
     
-    const grabPiece = (e = React.MouseEvent) => {
-        const element = e.target;
-        chessboard = chessboardRef.current
+    const grabPiece = (e = React.MouseEvent ) => {
+        element = e.target;
+        chessboard = chessboardRef.current;
         if(element.classList.contains("piece") && chessboard)
         {
             const x = e.clientX - 50;
@@ -23,13 +23,12 @@ export default function Chessboard ()
             element.style.position = "absolute";
             element.style.top = `${y}px`;
             element.style.left = `${x}px`;
-            chessboard = chessboardRef.current;
-            active = element;
+            
         }
     }
     const movePiece = (e = React.MouseEvent) => {
-        chessboard = chessboardRef.current;
-        if(chessboard && active)
+        element = e.target;chessboard = chessboardRef.current;
+        if(chessboard && element.classList.contains("piece"))
         {
             const x = e.clientX - 50;
             const y = e.clientY - 50;
@@ -38,13 +37,13 @@ export default function Chessboard ()
             const maxX = chessboard.offsetLeft + chessboard.clientWidth - 75;
             console.log(minX);
 
-            if(x < minX){active.style.left = `${minX}px`}
-            else if( x > maxX){active.style.left = `${maxX}px`;}
-            else{active.style.left = `${x}px`;}
+            if(x < minX){element.style.left = `${minX}px`}
+            else if( x > maxX){element.style.left = `${maxX}px`;}
+            else{element.style.left = `${x}px`;}
             
 
             
-            active.style.top = `${y}px`;
+            element.style.top = `${y}px`;
             
            
         }
@@ -52,8 +51,8 @@ export default function Chessboard ()
     }
     const dropPiece = (e = React.MouseEvent) => {
         
-            chessboard = chessboardRef.current;
-            if(active)
+            element = e.target;chessboard = chessboardRef.current;
+            if(element.classList.contains("piece"))
             {
                 const x = e.clientX - 50;
                 const y = e.clientY - 50;
@@ -71,9 +70,10 @@ export default function Chessboard ()
                     })
                     return piece;
                 })
-                active.style.position = "relative";
-                active.style.removeProperty("top");
-                active.style.removeProperty("left");
+                element.style.position = "static";
+                element.style.removeProperty("top");
+                element.style.removeProperty("left");
+                
                 
                 
             }
