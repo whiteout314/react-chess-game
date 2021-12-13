@@ -1,12 +1,13 @@
 import React, {useRef, useState} from 'react';
 import Tile from './Tile'; //import the tile component to push to board
 import {pieces} from "./PieceData";
+import {rule} from "./Rules/Rule";
 import '../Style/Chessboard.css';
 export default function Chessboard ()
 {
 
     const chessboardRef = useRef(null);
-    let active = null; let chessboard = null; let element = null;
+let chessboard = null; let element = null;
     const [piece, setPiece] = useState(pieces);
     const [grabX, setGrabX] = useState(0);
     const [grabY, setGrabY] = useState(0);
@@ -35,8 +36,7 @@ export default function Chessboard ()
             const minX = chessboard.offsetLeft - 40;
             const minY = chessboard.offsetTop - 40;
             const maxX = chessboard.offsetLeft + chessboard.clientWidth - 75;
-            console.log(minX);
-
+            
             if(x < minX){element.style.left = `${minX}px`}
             else if( x > maxX){element.style.left = `${maxX}px`;}
             else{element.style.left = `${x}px`;}
@@ -58,17 +58,33 @@ export default function Chessboard ()
                 const y = e.clientY - 50;
                 const dropX = Math.floor((e.clientX - chessboard.offsetLeft) / 100);
                 const dropY = Math.abs(Math.ceil((e.clientY - chessboard.offsetTop - 800) / 100));
+               
                 setPiece(value => {
                     const piece = value.map(p => {
+                        
+                        
                         if(p.x === grabX && p.y === grabY)
                         {
-                            p.x = dropX;
-                            p.y = dropY;
+                            
+                            console.log(p.piece);
+                            var s = rule(p.piece, p.y, dropY, p.x, dropX);
+                            if(s)
+                            {
+                                p.x = dropX;
+                                p.y = dropY; 
+
+
+                            }
+                            
+                                                       
                         }
-                        
                         return p;
-                    })
+                    
+                        
+                    });
                     return piece;
+                    
+                    
                 })
                 element.style.position = "static";
                 element.style.removeProperty("top");
