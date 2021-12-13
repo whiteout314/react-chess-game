@@ -8,14 +8,18 @@ export default function Chessboard ()
     const chessboardRef = useRef(null);
     let active = null; let chessboard = null;
     const [piece, setPiece] = useState(pieces);
+    const [grabX, setGrabX] = useState(0);
+    const [grabY, setGrabY] = useState(0);
+    
     const grabPiece = (e = React.MouseEvent) => {
         const element = e.target;
-        if(element.classList.contains("piece"))
+        chessboard = chessboardRef.current
+        if(element.classList.contains("piece") && chessboard)
         {
             const x = e.clientX - 50;
             const y = e.clinetY - 50;
-            
-
+            setGrabX(Math.floor((e.clientX - chessboard.offsetLeft) / 100));
+            setGrabY(Math.abs(Math.ceil((e.clientY - chessboard.offsetTop - 800) / 100)));
             element.style.position = "absolute";
             element.style.top = `${y}px`;
             element.style.left = `${x}px`;
@@ -29,11 +33,19 @@ export default function Chessboard ()
         {
             const x = e.clientX - 50;
             const y = e.clientY - 50;
+            const minX = chessboard.offsetLeft - 40;
+            const minY = chessboard.offsetTop - 40;
+            const maxX = chessboard.offsetLeft + chessboard.clientWidth - 75;
+            console.log(minX);
+
+            if(x < minX){active.style.left = `${minX}px`}
+            else if( x > maxX){active.style.left = `${maxX}px`;}
+            else{active.style.left = `${x}px`;}
             
-            console.log(Math.floor(((e.clientX -50) - chessboard.offsetLeft) / 100));
-            console.log(Math.abs(Math.ceil(((e.clientY - 50) -chessboard.offsetTop - 800) / 100)));
+
+            
             active.style.top = `${y}px`;
-            active.style.left = `${x}px`;
+            
            
         }
         
@@ -43,12 +55,18 @@ export default function Chessboard ()
             chessboard = chessboardRef.current;
             if(active)
             {
-                const x = Math.floor(((e.clientX - 50) - chessboard.offsetLeft) / 100);
-                const y = Math.abs(Math.ceil(((e.clientY - 50) -chessboard.offsetTop - 800) / 100));
+                const x = e.clientX - 50;
+                const y = e.clientY - 50;
+                const dropX = Math.floor((e.clientX - chessboard.offsetLeft) / 100);
+                const dropY = Math.abs(Math.ceil((e.clientY - chessboard.offsetTop - 800) / 100));
                 setPiece(value => {
                     const piece = value.map(p => {
-                        p.x = x;
-                        p.y = y;
+                        if(p.x === grabX && p.y === grabY)
+                        {
+                            p.x = dropX;
+                            p.y = dropY;
+                        }
+                        
                         return p;
                     })
                     return piece;
@@ -56,7 +74,7 @@ export default function Chessboard ()
                 active.style.position = "relative";
                 active.style.removeProperty("top");
                 active.style.removeProperty("left");
-                active = null;
+                
                 
             }
             
