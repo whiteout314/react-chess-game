@@ -1,32 +1,41 @@
 import { pieces } from "../PieceData";
 export const king = (
-  positionY,
-  desiredPositionY,
-  positionX,
-  desiredPositionX
+  pY,
+  dY,
+  pX,
+  dX
 ) => {
   let cont = true;
+  let attack = false;
   pieces.forEach((p) => {
     console.log("piece is fine");
-    if (
-      p.x === desiredPositionX &&
-      p.y === desiredPositionY
-      
-    ) {
+    if (p.x === dX && p.y === dY) {
       cont = false;
+      
+    }
+    if(p.x === dX && p.y === dY && p.color === "black")
+    {
+      attack = true;
+      p.x = null;
+      p.y = null;
+      console.log("Attack: " + attack);
     }
   });
+  if(attack)
+  {
+    return true;
+  }
   if (cont) {
     //Basic movements
     if (
-      desiredPositionY - positionY === 1 ||
-      desiredPositionY - positionY === -1
+      dY - pY === 1 ||
+      dY - pY === -1
     ) {
       console.log("Move is valid");
       return true;
     } else if (
-      desiredPositionX - positionX === 1 ||
-      desiredPositionX - positionX === -1
+      dX - pX === 1 ||
+      dX - pX === -1
     ) {
       console.log("Move is Valid");
       return true;

@@ -1,16 +1,24 @@
 import React from 'react';
-import {pawn} from './Pawn';
+import {pawn, pawnBlack} from './Pawn';
 import {king} from './King';
 import {bishop} from './Bishop';
 import {queen} from './Queen';
 import {horse} from './Horse';
 import {tower} from './Tower';
-export const rule = (piece, pY, dY, pX, dX) => 
+export const rule = (piece, pY, dY, pX, dX, color) => 
 {
     switch(piece)
     {
         case "pawn":
-           return pawn(pY, dY); 
+            switch(color)
+            {
+                case "white":
+                    return pawn(pY, dY, pX, dX); 
+                    break;
+                case "black":
+                    return pawnBlack(pY, dY, pX, dX);
+            }
+           
            break;
         case "king":
             return king(pY, dY, pX, dX);

@@ -3,13 +3,25 @@ import {pieces} from '../PieceData';
 
 export const horse = (pX, dX, pY, dY) => {
     let cont = true; 
-    pieces.forEach(p=> {
+    let attack = false;
+    pieces.forEach((p) => {
         console.log("piece is fine");
-        if(p.x === dX && p.y === dY && p.piece != "horse")
-        {
-            cont = false;
+        if (p.x === dX && p.y === dY) {
+          cont = false;
+          
         }
-    })
+        if(p.x === dX && p.y === dY && p.color === "black")
+        {
+          attack = true;
+          p.x = null;
+          p.y = null;
+          console.log("Attack: " + attack);
+        }
+      });
+      if(attack)
+      {
+        return true;
+      }
 
     //Basic movement of chess pieces
     console.log("Moving on the Y: " + dY - pY);
