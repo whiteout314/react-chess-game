@@ -1,39 +1,40 @@
 import { pieces } from "../PieceData";
+import { checkIfSame, checkPiece } from "./General";
 
 export const tower = (pX, dX, pY, dY) => {
-  let cont = true;
-  let attack = false;
-  pieces.forEach((p) => {
-    console.log("piece is fine");
-    if (p.x === dX && p.y === dY) {
-      cont = false;
-      
-    }
-    if(p.x === dX && p.y === dY && p.color === "black")
-    {
-      attack = true;
-      p.x = null;
-      p.y = null;
-      console.log("Attack: " + attack);
-    }
-  });
-  if(attack)
-  {
-    return true;
-  }
+  var multX = (dX < pX) ? -1: 1;
+  var multY = (dY < pY) ? -1: 1;
   
-  //Basic movements
-  if (cont) {
-    if ((dX - pX <= 8 || dX - pX >= 0) && dY === pY) {
-      console.log("Move is Valid");
-      return true;
-    } else if ((dY - pY <= 8 || dY - pY >= 1) && dX === pX) {
-      console.log("Move is Valid");
-      return true;
-    } else {
-      return false;
+  if (pY === dY) {
+    for (var i = 1; i < 8; i++) {
+      console.log("dx " + dX);
+      console.log("dy " + dY);
+      console.log("px " + pX);
+      console.log("py " + pY);
+
+      if (checkPiece(pX + i * multX, pY)) {
+        if (checkIfSame(pX + i * multX, pY, dX, dY)) {
+          return true;
+        }
+      } else {
+        break;
+      }
     }
-  } else {
-    return false;
+  }
+  for (var i = 1; i < 8; i++) {
+    if (pX === dX) {
+      console.log("X");
+
+      if (checkPiece(pX, pY + i * multY)) {
+        console.log("pY + i: " + (pY + i));
+        console.log("dy: " + dY);
+        if (checkIfSame(pX, pY + i * multY, dX, dY)) {
+          console.log("TRUrE");
+          return true;
+        }
+      } else {
+        break;
+      }
+    }
   }
 };

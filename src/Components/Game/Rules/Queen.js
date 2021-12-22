@@ -1,74 +1,21 @@
 import { pieces } from "../PieceData";
+import { checkIfSame, checkPiece } from "./General";
 
 export const queen = (pX, dX, pY, dY) => {
-  let cont = true;
+  let multX = dX < pX ? -1 : dX > pX ? 1 : 0;
+  let multY = dY < pY ? -1 : dY > pY ? 1 : 0;
+  for (var i = 1; i < 8; i++) {
+    
+    console.log('d.x: ' + dX + ' d.y: ' + dY);
+    if (checkPiece(pX + i * multX, pY + i * multY)) {
 
-  let attack = false;
-  pieces.forEach((p) => {
-    console.log("piece is fine");
-    if (p.x === dX && p.y === dY) {
-      cont = false;
-      console.log("cont " + cont);
-      if (p.color === "black") {
-        attack = true;
-      }
-      if (
-        attack &&
-        (dX - pX <= 8 || dX - pX >= 0 || dY - pY <= 8 || dY - pY >= 0)
-      ) {
-        p.x = null;
-        p.y = null;
+      if (checkIfSame(pX + i * multX, pY + i * multY, dX, dY)) {
         return true;
       }
-    }
-  });
-
-  //Basic Movements
-  if (cont) {
-    if ((dX - pX <= 8 || dX - pX >= 0) && (dY - pY <= 8 || dY - pY >= 0)) {
-      console.log("Move is valid");
-      return true;
     } else {
-      console.log("Move isn't valid");
-      return false;
+      console.log("BREAK");
+      break;
     }
   }
+  return false;
 };
-export const newQueen = (pX, dX, pY, dY) => {
-  let x_forbide = [];
-  let y_forbide = [];
-  pieces.forEach((p) => {
-    for(var x = dX; x < 8; x++)
-    {
-      for(var y = dY; y < 8; y++)
-      {
-        if ((dX - pX <= 8 || dX - pX >= 0) && (dY - pY <= 8 || dY - pY >= 0)) {
-          console.log("passed this");
-          if(x === p.x && y === p.y)
-          {
-            x_forbide.push(x);
-            y_forbide.push(y);
-          }
-        }
-      }
-    }
-  });
-  for(var xy = 0; xy < x_forbide.length; xy++)
-  {
-    
-      console.log("x: " + x_forbide);
-      console.log("y: " + y_forbide);
-      console.log("dX: " + dX);
-      console.log("dY: " + dY);
-      if(dX === x_forbide[xy] && dY === y_forbide[xy])
-      {
-        
-        return false;
-      }
-      else
-      {
-        return true;
-      }
-    
-  }
-}

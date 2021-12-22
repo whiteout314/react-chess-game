@@ -1,37 +1,39 @@
 import { pieces } from "../PieceData";
+import { checkIfSame, checkPiece } from "./General";
 export const bishop = (pX, dX, pY, dY) => {
-  let cont = true;
-  let attack = false;
-  pieces.forEach((p) => {
-    console.log("piece is fine");
-    if (p.x === dX && p.y === dY) {
-      cont = false;
-      
+  for (var i = 1; i < 8; i++) {
+    if (dX < pX && dY < pY) {
+      if (checkPiece(pX - i, pY - i)) {
+        if (checkIfSame(pX - i, pY - i, dX, dY)) {
+          return true;
+        }
+      } else {
+        break;
+      }
+    } else if (dX > pX && dY > pY) {
+      if (checkPiece(pX + i, pY + i)) {
+        if (checkIfSame(pX + i, pY + i, dX, dY)) {
+          return true;
+        }
+      } else {
+        break;
+      }
+    } else if (dX > pX && dY < pY) {
+      if (checkPiece(pX + i, pY - i)) {
+        if (checkIfSame(pX + i, pY - i, dX, dY)) {
+          return true;
+        }
+      } else {
+        break;
+      }
+    } else if (dX < pX && dY > pY) {
+      if (checkPiece(pX - i, pY + i)) {
+        if (checkIfSame(pX - i, pY + i, dX, dY)) {
+          return true;
+        } else {
+          break;
+        }
+      }
     }
-    if(p.x === dX && p.y === dY && p.color === "black")
-    {
-      attack = true;
-      p.x = null;
-      p.y = null;
-      console.log("Attack: " + attack);
-    }
-  });
-  if(attack)
-  {
-    return true;
-  }
-  if (cont) {
-    if ((dX - pX <= 8 || dX - pX >= 0) && dX != pX && dY != pY) {
-      console.log("Move is valid");
-      return true;
-    } else if (dY - pY <= 8 && dY - pY >= 0 && dX != pX && dY != pY) {
-      console.log("Move is valid");
-      return true;
-    } else {
-      console.log("Move isn't valid");
-      return false;
-    }
-  } else {
-    return false;
   }
 };

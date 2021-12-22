@@ -71,11 +71,12 @@ export default function Chessboard() {
               console.log(p.piece);
               var s = rule(p.piece, p.y, dropY, p.x, dropX, p.color);
               
-              color === "white" ? setColor("black") : setColor("white");
+              
               console.log(color);
               if (s) {
                 p.x = dropX;
                 p.y = dropY;
+                color === "white" ? setColor("black") : setColor("white");
               }
               
             }

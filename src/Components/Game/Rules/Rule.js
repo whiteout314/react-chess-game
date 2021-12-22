@@ -2,7 +2,7 @@ import React from 'react';
 import {pawn, pawnBlack} from './Pawn';
 import {king} from './King';
 import {bishop} from './Bishop';
-import {queen, newQueen} from './Queen';
+import {queen} from './Queen';
 import {horse} from './Horse';
 import {tower} from './Tower';
 export const rule = (piece, pY, dY, pX, dX, color) => 
@@ -26,7 +26,7 @@ export const rule = (piece, pY, dY, pX, dX, color) =>
         case "tower":
             return tower(pX, dX, pY, dY);
         case "queen":
-            return newQueen(pX, dX, pY, dY);
+            return queen(pX, dX, pY, dY);
         case "bishop":
             return bishop(pX, dX, pY, dY);
         case "horse":

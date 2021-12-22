@@ -1,5 +1,6 @@
 export const pieces = [
-    {
+    /*{
+        
         piece: "pawn",
         image: "https://upload.wikimedia.org/wikipedia/commons/0/04/Chess_plt60.png",
         x: 0,
@@ -48,6 +49,7 @@ export const pieces = [
         y: 1,
         color: "white",
     },
+    
     {
         piece: "pawn",
         image: "https://upload.wikimedia.org/wikipedia/commons/0/04/Chess_plt60.png",
@@ -55,7 +57,7 @@ export const pieces = [
         y: 1,
         color: "white",
     },
-
+*/
     {
         piece: "king",
         image: "https://upload.wikimedia.org/wikipedia/commons/3/3b/Chess_klt60.png",
@@ -112,7 +114,7 @@ export const pieces = [
         y: 0,
         color: "white",
     },
-    //
+    /*
     {
         piece: "pawn",
         image: "https://upload.wikimedia.org/wikipedia/commons/c/cd/Chess_pdt60.png",
@@ -169,7 +171,7 @@ export const pieces = [
         y: 6,
         color: "black",
     },
-
+ */
     {
         piece: "king",
         image: "https://upload.wikimedia.org/wikipedia/commons/e/e3/Chess_kdt60.png",
